@@ -63,12 +63,16 @@ class HomeController extends Controller
         $product = Product::findOrFail($request['product_id']);
         $productDetails = $product->productDetails()->get()->toArray();
         $cart = new Cart();
-        $cart->create([
-            'product' => $product->toArray(),
-            'productDetails' => $productDetails,
-            'product_detail_id' => null,
-            'amount' => 1
-        ]);
+        if($cart->whereExist($product['id'])) {
+            return redirect()->back()->withErrors('Product must be unique');
+        } else {
+            $cart->create([
+                'product' => $product->toArray(),
+                'productDetails' => $productDetails,
+                'product_detail_id' => null,
+                'amount' => 1
+            ]);
+        }
 
         return redirect()->back();
     }

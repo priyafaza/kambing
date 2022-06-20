@@ -11,6 +11,24 @@ class Cart
         return is_null(Session::get('cart')) ? [] : Session::get('cart');
     }
 
+    public function whereExist($productId)
+    {
+        $cart = is_null(Session::get('cart')) ? [] : Session::get('cart');
+        $status = false;
+        if(empty($cart)){
+            return $status;
+        }
+
+        foreach($cart as $item){
+            if($item['product']['id'] !== $productId){
+                $status = true;
+                break;
+            }
+        }
+
+        return $status;
+    }
+
     public function create($data)
     {
         $cart = is_null(Session::get('cart')) ? [] : Session::get('cart');
