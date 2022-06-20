@@ -66,7 +66,7 @@
                                     @foreach($order['orderDetails'] as $orderDetail)
                                         <tr>
                                             <td>{{ $orderDetail['amount'] }}</td>
-                                            <td>{{ $orderDetail['productDetail']['product']['name'] }} {{ $orderDetail['productDetail']['detail'] }}</td>
+                                            <td>{{ $orderDetail['productDetail']['product']['name'] }} {{ $orderDetail['productDetail']['name'] }}</td>
                                             <td>{{ $orderDetail['productDetail']['formatted_price'] }}</td>
                                             <td>{{ $orderDetail['productDetail']['product']['summary'] }}</td>
                                             <td>{{ formatPrice($orderDetail['amount'] * $orderDetail['productDetail']['price']) }}</td>
