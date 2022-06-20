@@ -46,7 +46,8 @@
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                             <tr>
-                                <th>Size</th>
+                                <th>Name</th>
+                                <th>Detail</th>
                                 <th>Price</th>
                                 <th>Stock</th>
                                 <th>Action</th>
@@ -55,7 +56,8 @@
                             <tbody>
                             @foreach($product->productDetails()->get() as $productVariant)
                                 <tr>
-                                    <td>{{ $productVariant['size'] }}</td>
+                                    <td>{{ $productVariant['name'] }}</td>
+                                    <td>{{ $productVariant['detail'] }}</td>
                                     <td>{{ $productVariant['formatted_price'] }}</td>
                                     <td>
                                         <form action="{{ route('productVariant.update', $productVariant['id']) }}" method="POST">
@@ -102,15 +104,19 @@
                     <div class="modal-body">
                         @csrf
                         <div class="form-group">
-                            <label>Size</label>
-                            <input type="number" min="0" class="form-control" name="size" required>
+                            <label>Name</label>
+                            <input type="text" min="0" class="form-control" name="name" required>
                         </div>
                         <div class="form-group">
-                            <label>Price per Kg</label>
+                            <label>Detail</label>
+                            <input type="text" min="0" class="form-control" name="detail" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Price</label>
                             <input type="number" min="0" class="form-control" name="price" required>
                         </div>
                         <div class="form-group">
-                            <label>Stock (Kg)</label>
+                            <label>Stock</label>
                             <input type="number" min="0" class="form-control" name="stock" required>
                         </div>
 

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateShippingPricesTable extends Migration
+class AddNameInProductDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateShippingPricesTable extends Migration
      */
     public function up()
     {
-        Schema::create('shipping_prices', function (Blueprint $table) {
-            $table->id();
-            $table->string('city');
-            $table->unsignedDouble('price');
-            $table->timestamps();
+        Schema::table('product_details', function (Blueprint $table) {
+            //
+            $table->dropColumn('size');
+            $table->string('name');
+            $table->string('detail');
         });
     }
 
@@ -28,6 +28,8 @@ class CreateShippingPricesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('shipping_prices');
+        Schema::table('product_details', function (Blueprint $table) {
+            //
+        });
     }
 }

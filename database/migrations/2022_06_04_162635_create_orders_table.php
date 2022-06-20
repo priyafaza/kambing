@@ -18,7 +18,6 @@ class CreateOrdersTable extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class);
-            $table->foreignIdFor(ShippingPrice::class)->nullable();
             $table->text('shipping_address')->nullable();
             $table->enum('status', ['draft','pending_payment', 'success_payment', 'processing', 'packaging', 'shipping', 'delivered', 'done'])->default('draft');
             $table->timestamps();

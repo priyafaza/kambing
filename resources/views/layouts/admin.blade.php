@@ -77,15 +77,6 @@
                     </li>
 
                     <li class="nav-item">
-                        <a href="{{ route('shipping_price.index') }}" class="nav-link">
-                            <i class="nav-icon fas fa-shipping-fast"></i>
-                            <p>
-                                Shipping Price
-                            </p>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
                         <a href="{{ route('product.index') }}" class="nav-link">
                             <i class="nav-icon fas fa-fish"></i>
                             <p>

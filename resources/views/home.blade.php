@@ -9,7 +9,7 @@
                 <div class="row">
                     <!-- /.col -->
                     @foreach($products as $product)
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="card card-success">
                             <div class="card-header">
                                 <h3 class="card-title">{{ $product['name'] }}</h3>
@@ -25,7 +25,7 @@
                             <div class="card-footer">
                                 <div class="row">
                                     <div class="col-6 text-left">
-                                        <p>Stock : <i class="fas fa-box"></i> {{ $product->productDetails()->sum('stock') }} Kg</p>
+                                        {{-- <p>Stock : <i class="fas fa-box"></i> {{ $product->productDetails()->sum('stock') }}</p> --}}
                                     </div>
                                 </div>
                                 <div class="row">
@@ -33,7 +33,8 @@
                                         <table class="table table-bordered table-striped">
                                             <thead>
                                             <tr>
-                                                <th>Size</th>
+                                                <th>Name</th>
+                                                <th>Detail</th>
                                                 <th>Price /Kg</th>
                                                 <th>Stock</th>
                                             </tr>
@@ -41,7 +42,8 @@
                                             <tbody>
                                             @foreach($product->productDetails()->get() as $productDetail)
                                                 <tr>
-                                                    <td>{{ $productDetail['size'] }}</td>
+                                                    <td>{{ $productDetail['name'] }}</td>
+                                                    <td>{{ $productDetail['detail'] }}</td>
                                                     <td>{{ $productDetail['formatted_price'] }}</td>
                                                     <td>{{ $productDetail['stock'] }}</td>
                                                 </tr>

@@ -3,7 +3,6 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ShippingPriceController;
 use App\Http\Controllers\ReportController;
 use App\Models\Product;
 use App\Models\ProductDetail;
@@ -39,9 +38,6 @@ Route::post('/create-order', [HomeController::class, 'submitOrder']);
 
 Route::group(['middleware' => ['is_admin']], function () {
 
-    Route::apiResource('shipping_price', ShippingPriceController::class, [
-        'only' => ['index', 'store', 'update', 'destroy'],
-    ]);
 
     Route::apiResource('product', ProductController::class, [
         'only' => ['index', 'store', 'show'],

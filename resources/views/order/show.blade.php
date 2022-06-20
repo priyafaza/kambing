@@ -65,8 +65,8 @@
                                     <tbody>
                                     @foreach($order['orderDetails'] as $orderDetail)
                                         <tr>
-                                            <td>{{ $orderDetail['amount'] }} Kg</td>
-                                            <td>{{ $orderDetail['productDetail']['product']['name'] }}</td>
+                                            <td>{{ $orderDetail['amount'] }}</td>
+                                            <td>{{ $orderDetail['productDetail']['product']['name'] }} {{ $orderDetail['productDetail']['detail'] }}</td>
                                             <td>{{ $orderDetail['productDetail']['formatted_price'] }}</td>
                                             <td>{{ $orderDetail['productDetail']['product']['summary'] }}</td>
                                             <td>{{ formatPrice($orderDetail['amount'] * $orderDetail['productDetail']['price']) }}</td>
@@ -93,8 +93,8 @@
                                             <td>{{ $order['amount'] }}</td>
                                         </tr>
                                         <tr>
-                                            <th>Shipping:</th>
-                                            <td>{{ $order['total_shipping_price'] }}</td>
+                                            <th>Options</th>
+                                            <td>{{$order['shipping']}}</td>
                                         </tr>
                                         <tr>
                                             <th>Total:</th>

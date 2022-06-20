@@ -66,8 +66,8 @@
                                             <select class="form-control" name="product_detail_id[]" required>
                                                 @foreach($item['productDetails'] as $variant)
                                                     <option value="{{ $variant['id'] }}">{{ $item['product']['name'] }}
-                                                        - {{ $variant['size'] }} ({{ formatPrice($variant['price']) }}
-                                                        /Kg)
+                                                        - {{ $variant['name'] }} {{ $variant['detail'] }} ({{ formatPrice($variant['price']) }}
+                                                        )
                                                     </option>
                                                 @endforeach
                                             </select>
@@ -108,15 +108,11 @@
                                     <textarea class="form-control" name="shipping_address" rows="4"></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label>City</label>
-                                    <select class="form-control" name="shipping_price_id" required>
-                                        <option>-- Select City --</option>
-                                        @foreach($shippingPrices as $shippingPrice)
-                                            <option value="{{ $shippingPrice['id'] }}">{{ $shippingPrice['city'] }}
-                                                -
-                                                Ongkir {{ $shippingPrice['formatted_price'] }}/Kg
-                                            </option>
-                                        @endforeach
+                                    <label>Option</label>
+                                    <select class="form-control" name="shipping" required>
+                                        <option>-- SHIPPING --</option>
+                                        <option value="DI AMBIL">DI AMBIL</option>
+                                        <option value="DI ANTAR">DI ANTAR</option>
                                     </select>
                                 </div>
                                 <button type="submit" class="btn btn-success">Checkout</button>

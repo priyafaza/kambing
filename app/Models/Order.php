@@ -10,8 +10,8 @@ class Order extends Model
     use HasFactory;
 
     protected $fillable = [
-        'shipping_price_id',
         'shipping_address',
+        'shipping',
         'status',
     ];
 
@@ -39,11 +39,6 @@ class Order extends Model
         return self::STATUS_OPTION[$index + 1];
     }
 
-    public function shippingPrice()
-    {
-        return $this->belongsTo(ShippingPrice::class);
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -66,9 +61,8 @@ class Order extends Model
 
     public function totalShippingPrice()
     {
-        $price = $this->shippingPrice['price'];
         $weight = $this->orderDetails()->sum('amount');
-        return $price * $weight;
+        return $weight;
     }
 
     public function getTotalShippingPriceAttribute()
@@ -93,7 +87,7 @@ class Order extends Model
 
     public function getTotalPaymentAttribute()
     {
-        return formatPrice($this->totalShippingPrice() + $this->amount());
+        return formatPrice($this->amount());
 
     }
 }

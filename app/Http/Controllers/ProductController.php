@@ -52,13 +52,15 @@ class ProductController extends Controller
     public function addVariant(Product $product, Request $request)
     {
         $request->validate([
-            'size'=>'required|integer',
+            'name'=>'required|string',
+            'detail'=>'required|string',
             'stock'=>'required|integer',
             'price'=>'required|integer',
         ]);
 
-        $productDetails = $product->productDetails()->where('size',$request['size'])->firstOrNew();
-        $productDetails['size'] = $request['size'];
+        $productDetails = $product->productDetails()->where('name',$request['name'])->firstOrNew();
+        $productDetails['name'] = $request['name'];
+        $productDetails['detail'] = $request['detail'];
         $productDetails['stock'] = $request['stock'];
         $productDetails['price'] = $request['price'];
         $productDetails->save();

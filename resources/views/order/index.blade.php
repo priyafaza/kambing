@@ -29,7 +29,7 @@
                                 <th>Shipping Address</th>
                                 <th>Total item</th>
                                 <th>Amount</th>
-                                <th>Shipping Price</th>
+                                <th>Option</th>
                                 <th>Total Amount</th>
                                 <th>Status</th>
                                 <th>Action</th>
@@ -39,11 +39,9 @@
                             @foreach($orders as $order)
                                 <tr>
                                     <td>{{ $order['shipping_address'] }}</td>
-                                    <td>{{ $order['total_item'] }} ({{ $order['total_weight'] }} Kg)</td>
+                                    <td>{{ $order['total_item'] }} ({{ $order['total_weight'] }})</td>
                                     <td>{{ $order['amount'] }}</td>
-                                    <td>{{ $order->shippingPrice['city'] }}<br>
-                                        {{ $order['total_shipping_price'] }}
-                                    </td>
+                                    <td>{{ $order['shipping']}}</td>
                                     <td>{{ $order['total_payment'] }}</td>
                                     <td>{{ $order['status'] }}</td>
                                     <td>

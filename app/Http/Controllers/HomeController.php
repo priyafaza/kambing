@@ -6,10 +6,10 @@ use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductDetail;
-use App\Models\ShippingPrice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\Rule;
 
 class HomeController extends Controller
 {
@@ -49,10 +49,9 @@ class HomeController extends Controller
         ]);
 
         $products = Product::with('productDetails')->get();
-        $shippingPrices = ShippingPrice::all();
         $cart = Cart::all();
 
-        return view('order.create', compact('products', 'shippingPrices', 'draftOrder', 'cart'));
+        return view('order.create', compact('products', 'draftOrder', 'cart'));
     }
 
     public function addToCart(Request $request)
@@ -88,19 +87,21 @@ class HomeController extends Controller
             'product_detail_id'=>'required',
             'amount'=>'required',
             'shipping_address'=>'required|string',
-            'shipping_price_id' => 'required|exists:shipping_prices,id'
+            'shipping' => ['required','string',
+                Rule::in(['DI AMBIL', 'DI ANTAR'])
+            ],
         ]);
 
         for($i = 0; $i < count($request['product_detail_id']); $i++) {
             $productDetail = ProductDetail::find($request['product_detail_id'][$i]);
             if($productDetail['stock'] < $request['amount'][$i]){
-                return redirect()->back()->withErrors('Stock product '.$productDetail->product['name'].' - '.$productDetail['size'].' only '.$productDetail['stock'].' left');
+                return redirect()->back()->withErrors('Stock product '.$productDetail->product['name'].' - '.$productDetail['detail'].' only '.$productDetail['stock'].' left');
             }
         }
         DB::transaction(function () use($request) {
             $currentUser = $request->user();
             $order = $currentUser->orders()->where('status', 'draft')->first();
-            $order['shipping_price_id'] = $request['shipping_price_id'];
+            $order['shipping'] = $request['shipping'];
             $order['shipping_address'] = $request['shipping_address'];
             $order['status'] = $order->nextStatus();
             $order->save();
