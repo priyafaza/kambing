@@ -6,9 +6,9 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\AdminSavingController;
+use App\Http\Controllers\AdminDataSavingController;
 use App\Models\Product;
 use App\Models\ProductDetail;
-use App\Models\Saving;
 use Illuminate\Support\Facades\Route;
 
 /*
