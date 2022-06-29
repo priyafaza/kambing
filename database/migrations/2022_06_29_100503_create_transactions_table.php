@@ -19,8 +19,10 @@ class CreateTransactionsTable extends Migration
             $table->id();
             $table->foreignIdFor(Wallet::class);
             $table->foreignIdFor(Saving::class)->nullable();
-            $table->unsignedBigInteger('mount');
+            $table->unsignedBigInteger('amount');
             $table->enum('category', ['buy', 'deposit', 'withdraw']);
+            $table->string('payment_proof')->nullable();
+            $table->enum('status',['pending','waiting approval','success','failed','cancelled'])->default('pending');
             $table->timestamps();
         });
     }

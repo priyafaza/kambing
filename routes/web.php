@@ -40,8 +40,11 @@ Route::post('/add-to-cart', [HomeController::class, 'addToCart']);
 Route::post('/remove-from-cart/{id}', [HomeController::class, 'removeFromCart']);
 Route::post('/create-order', [HomeController::class, 'submitOrder']);
 Route::get('/my/saving', [SavingController::class, 'index'])->name('my.saving');
-Route::get('/my/saving/detail', [SavingController::class, 'detail'])->name('my.saving.detail');
-Route::get('/my/saving/upload', [SavingController::class, 'upload'])->name('my.saving.upload');
+Route::post('/my/saving/store', [SavingController::class, 'store'])->name('my.saving.store');
+Route::get('/my/saving/detail/{saving}', [SavingController::class, 'detail'])->name('my.saving.detail');
+Route::post('/my/saving/detail/{saving}/start', [SavingController::class, 'start'])->name('my.saving.detail.start');
+Route::get('/my/saving/upload/{transaction}', [SavingController::class, 'upload'])->name('my.saving.upload');
+Route::post('/my/saving/upload/{transaction}', [SavingController::class, 'updatePayment'])->name('my.saving.upload.payment');
 
 
 

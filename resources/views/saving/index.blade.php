@@ -6,29 +6,34 @@
     <section>
         <div class="card">
             <div class="card-body">
-                <button class="btn btn-success" data-toggle="modal" data-target="#addSaldo"><i class="fas fa-wallet"></i> Make Saving</button>
+                <button class="btn btn-success" data-toggle="modal" data-target="#addSaldo"><i class="fas fa-plus"></i>
+                    Buat rencana tabungan baru
+                </button>
             </div>
             <div class="card-body">
                 <div class="row">
                     <!-- /.col -->
-                    <div class="col-md-4">
-                        <div class="card card-success">
-                            <div class="card-header">
-                                <h3 class="card-title">Tabungan</h3>
+                    @foreach($savings as $saving)
+                        <div class="col-md-4">
+                            <div class="card card-success">
+                                <div class="card-header">
+                                    <h3 class="card-title">{{ $saving['name'] }}</h3>
 
-                                <div class="card-tools">
+                                    <div class="card-tools">
+                                    </div>
+                                    <!-- /.card-tools -->
                                 </div>
-                                <!-- /.card-tools -->
+                                <!-- /.card-header -->
+                                <div class="card-body text-center">
+                                    <h3>{{ $saving['progress_percent'] }} %</h3>
+                                    <h4>{{ formatPrice($saving['total']) }}/{{ formatPrice($saving['target']) }}</h4>
+                                    <a href="{{ route('my.saving.detail', $saving['id']) }}" class="btn btn-info">Lihat detail tabungan</a>
+                                </div>
+                                <!-- /.card-body -->
                             </div>
-                            <!-- /.card-header -->
-                            <div class="card-body text-center">
-                               <p>Tabungan Ku</p>
-                               <a href="{{ route('my.saving.detail') }}" class="btn btn-info">See Saving</a>
-                            </div>
-                            <!-- /.card-body -->
+                            <!-- /.card -->
                         </div>
-                        <!-- /.card -->
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -42,24 +47,29 @@
                     <h4 class="modal-title">Saving</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <form action="#" method="POST">
+                <form action="{{ route('my.saving.store') }}" method="POST">
                     <div class="modal-body">
                         @csrf
                         <div class="form-group">
-                            <label>Name</label>
-                            <input type="text" min="0" class="form-control" name="name" required>
+                            <label>Rencana menabung untuk</label>
+                            <input type="text" class="form-control" name="name" required>
                         </div>
                         <div class="form-group">
-                            <label>Target</label>
-                            <input type="text" min="0" class="form-control" name="target" required>
+                            <label>Nominal yang ingin di capai</label>
+                            <input type="number" min="0" class="form-control" name="target" required>
                         </div>
                         <div class="form-group">
-                            <label>Due Date</label>
-                            <input type="number" min="0" class="form-control" name="duedate" required>
+                            <label>Waktu yang ingin di capai</label>
+                            <input type="date" class="form-control" name="due_date" required>
                         </div>
                         <div class="form-group">
-                            <label>period</label>
-                            <input type="number" min="0" class="form-control" name="period" required>
+                            <label>Rencana periode menabung rutin</label>
+                            <select class="form-control" name="period" required>
+                                <option value="">-- Pilih --</option>
+                                @foreach(\App\Models\Saving::PERIODS as $name => $period)
+                                    <option value="{{ $period }}">{{ $name }}</option>
+                                @endforeach
+                            </select>
                         </div>
 
                     </div>

@@ -11,16 +11,16 @@
                         </div>
                         <div class="card-body">
                             <h4 class="text-center">Total Payment</h4>
-                            <h2 class="text-center">Nominal Nabung</h2>
+                            <h2 class="text-center">{{ formatPrice($transaction['amount']) }}</h2>
                             <p>No.Rekening Perusahaan</p>
                             <p>Bank Name: BCA</p>
                             <p>Bank Account Name : PT.Blalblabla</p>
                             <p>Bank Account Number : 123456</p>
                             <hr>
-                            <form action="#" method="POST" enctype="multipart/form-data">
-                                <input type="hidden" name="_method" value="PATCH">
+                            <form action="{{ route('my.saving.upload.payment', $transaction['id']) }}" method="POST" enctype="multipart/form-data">
+                                @csrf
                                 <label>Upload Bukti Transfer</label>
-                                <input type="file" name="#" class="form-control" id="#">
+                                <input type="file" name="payment_proof" class="form-control" required>
                                 <br>
                                 <button type="submit" class="btn btn-primary">Upload</button>
                             </form>
