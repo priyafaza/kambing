@@ -12,4 +12,10 @@ class Transaction extends Model
         'mount',
         'category',
     ];
+
+
+    public function wallet()
+    {
+        return $this->belongsTo(Wallet::class);
+    }
 }
