@@ -45,6 +45,7 @@ Route::post('/my/saving/store', [SavingController::class, 'store'])->name('my.sa
 Route::get('/my/saving/detail/{saving}', [SavingController::class, 'detail'])->name('my.saving.detail');
 Route::post('/my/saving/detail/{saving}/start', [SavingController::class, 'start'])->name('my.saving.detail.start');
 Route::get('/my/saving/upload/{transaction}', [SavingController::class, 'upload'])->name('my.saving.upload');
+Route::get('/my/saving/upload/{transaction}/cancel', [SavingController::class, 'cancel'])->name('my.saving.cancel');
 Route::post('/my/saving/upload/{transaction}', [SavingController::class, 'updatePayment'])->name('my.saving.upload.payment');
 
 
