@@ -68,6 +68,13 @@ Route::group(['middleware' => ['is_admin']], function () {
         'only' => ['index', 'store', 'show'],
     ]);
 
+    Route::apiResource('saving', AdminSavingController::class, [
+        'only' => ['index', 'show'],
+    ]);
+    Route::apiResource('datasaving', AdminDataSavingController::class, [
+        'only' => ['index', 'show'],
+    ]);
+
 
     Route::post('order/{order}/update-status', [OrderController::class, 'updateStatus']);
 });
