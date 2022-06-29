@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title') Order List @stop
+@section('title') Saving User @stop
 
 @section('content')
     <section class="content">
@@ -8,7 +8,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Order List</h3>
+                        <h3 class="card-title">Saving List</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -16,28 +16,21 @@
                             <thead>
                             <tr>
                                 <th>User</th>
-                                <th>Shipping Address</th>
-                                <th>Option</th>
-                                <th>Total item</th>
-                                <th>Total Amount</th>
-                                <th>Status</th>
+                                <th>Name Saving</th>
+                                <th>Deposit</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($orders as $order)
+
                                 <tr>
-                                    <td>{{ $order['user']['name'] }}</td>
-                                    <td>{{ $order['shipping_address'] }}</td>
-                                    <td>{{ $order ['shipping']}}</td>
-                                    <td>{{ $order['total_item'] }} ({{ $order['total_weight'] }})</td>
-                                    <td>{{ $order['total_payment'] }}</td>
-                                    <td>{{ $order['status'] }}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
                                     <td>
-                                        <a href="/order/{{ $order['id'] }}" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
+                                        <a href="#" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
                                     </td>
                                 </tr>
-                            @endforeach
                             </tbody>
                         </table>
                     </div>
