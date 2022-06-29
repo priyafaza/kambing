@@ -70,8 +70,9 @@ Route::group(['middleware' => ['is_admin']], function () {
     ]);
 
     Route::apiResource('saving', AdminSavingController::class, [
-        'only' => ['index', 'show'],
+        'only' => ['index'],
     ]);
+    Route::patch('saving/update/{transaction}',[AdminSavingController::class,'update'])->name('saving.update');
     Route::apiResource('datasaving', AdminDataSavingController::class, [
         'only' => ['index', 'show'],
     ]);

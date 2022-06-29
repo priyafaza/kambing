@@ -20,11 +20,12 @@
                             </tr>
                             </thead>
                             <tbody>
-
+                            @foreach($users as $user)
                                 <tr>
-                                    <td></td>
-                                    <td></td>
+                                    <td>{{ $user['name'] }}</td>
+                                    <td>{{ formatPrice($user['wallet']['cash']) }}</td>
                                 </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
