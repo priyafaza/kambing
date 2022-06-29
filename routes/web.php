@@ -5,6 +5,7 @@ use App\Http\Controllers\SavingController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\AdminSavingController;
 use App\Models\Product;
 use App\Models\ProductDetail;
 use App\Models\Saving;
