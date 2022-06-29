@@ -35,7 +35,7 @@
                                 <address>
                                     <strong>{{ $order['user']['name'] }}</strong><br>
                                     {{ $order['shipping_address'] }}<br>
-                                    Phone:-<br>
+                                    Phone: {{ $order['number'] }}<br>
                                     Email: {{ $order['user']['email'] }}
                                 </address>
                             </div>
@@ -112,6 +112,11 @@
                             </div>
                             <!-- /.col -->
                         </div>
+                        @if($order['payment_proof'] !== null)
+                            <hr>
+                            <h6>Payment Proof</h6>
+                            <img src="{{ $order['payment_proof'] }}" style="height: 300px; width: auto">
+                        @endif
                         <!-- /.row -->
                     </div>
                     <!-- /.invoice -->

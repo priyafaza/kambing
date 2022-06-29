@@ -35,7 +35,7 @@
                                 <address>
                                     <strong>{{ $order['user']['name'] }}</strong><br>
                                     {{ $order['shipping_address'] }}<br>
-                                    Phone:-<br>
+                                    Phone: {{ $order['number'] }}<br>
                                     Email: {{ $order['user']['email'] }}
                                 </address>
                             </div>
@@ -43,8 +43,12 @@
                             <div class="col-sm-4 invoice-col">
                                 <b>Invoice #{{ $order->created_at->timestamp }}/{{ $order['id'] }}</b><br>
                                 <b>Payment Status : {{ $order['status'] }}</b><br>
-
+                                @if($order['status'] === 'pending_payment')
+                                <a href="{{ route('my.order.detail.upload',$order['id']) }}" class="btn btn-success">Upload
+                                    Bukti Transfer</a>
+                                @endif
                             </div>
+
                             <!-- /.col -->
                         </div>
                         <!-- /.row -->
@@ -105,6 +109,11 @@
                             </div>
                             <!-- /.col -->
                         </div>
+                        @if($order['payment_proof'] !== null)
+                            <hr>
+                            <h6>Payment Proof</h6>
+                            <img src="{{ $order['payment_proof'] }}" style="height: 300px; width: auto">
+                        @endif
                         <!-- /.row -->
                     </div>
                     <!-- /.invoice -->

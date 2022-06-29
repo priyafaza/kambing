@@ -12,6 +12,7 @@ class Order extends Model
     protected $fillable = [
         'shipping_address',
         'shipping',
+        'number',
         'status',
     ];
 

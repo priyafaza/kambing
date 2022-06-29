@@ -104,6 +104,9 @@
                                            value="{{ auth()->user()['name'] }}" readonly>
                                 </div>
                                 <div class="form-group">
+                                    <label for="exampleInputPassword1">Number</label>
+                                    <input type="text" placeholder="08XX-XXXX-XXXX" class="form-control" name="number" rows="4">                                </div>
+                                <div class="form-group">
                                     <label for="exampleInputPassword1">Shipping Address</label>
                                     <textarea class="form-control" name="shipping_address" rows="4"></textarea>
                                 </div>

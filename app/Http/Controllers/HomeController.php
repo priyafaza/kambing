@@ -64,7 +64,7 @@ class HomeController extends Controller
         $productDetails = $product->productDetails()->get()->toArray();
         $cart = new Cart();
         if($cart->whereExist($product['id'])) {
-            return redirect()->back()->withErrors('Product must be unique');
+            return redirect()->back()->withErrors('You Only Can Choice 1 Item');
         } else {
             $cart->create([
                 'product' => $product->toArray(),
@@ -90,9 +90,10 @@ class HomeController extends Controller
         $request->validate([
             'product_detail_id'=>'required',
             'amount'=>'required',
+            'number'=>'required|string',
             'shipping_address'=>'required|string',
             'shipping' => ['required','string',
-                Rule::in(['DI AMBIL', 'DI ANTAR'])
+                Rule::in(['DI AMBIL', 'DI ANTAR']),
             ],
         ]);
 
@@ -106,6 +107,7 @@ class HomeController extends Controller
             $currentUser = $request->user();
             $order = $currentUser->orders()->where('status', 'draft')->first();
             $order['shipping'] = $request['shipping'];
+            $order['number'] = $request['number'];
             $order['shipping_address'] = $request['shipping_address'];
             $order['status'] = $order->nextStatus();
             $order->save();
@@ -131,5 +133,34 @@ class HomeController extends Controller
     public function orderDetail(Order $order)
     {
         return view('order.show', compact('order'));
+    }
+    public function uploadForm(Order $order)
+    {
+        if($order['status'] !== 'pending_payment'){
+            abort(404);
+        }
+        return view('order.upload', compact('order'));
+    }
+
+    public function updatePayment(Request $request, Order $order)
+    {
+        if($order['status'] !== 'pending_payment'){
+            abort(404);
+        }
+
+        $request->validate([
+            'payment_proof' => "required|file|mimes:jpeg,png,jpg,gif,svg|max:1000"
+        ]);
+
+        $image_path = $order['payment_proof'];
+        if ($request->file('payment_proof') != '') {
+            $main_image = uniqid() . '.' . $request->file('payment_proof')->getClientOriginalExtension();
+            $request->file('payment_proof')->move(storage_path('app/public/payment_proof'), $main_image);
+            $image_path = '/storage/payment_proof/' . $main_image;
+        }
+        $order['payment_proof'] = $image_path;
+        $order->save();
+
+        return redirect()->route('my.order.detail', $order['id'])->withMessage('Payment proof uploaded');
     }
 }

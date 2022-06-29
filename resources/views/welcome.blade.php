@@ -85,10 +85,9 @@
             <div class="row info-head">
                 <div class="col-lg-6 col-md-8 col-xs-8" data-aos="fade-right">
                     <div class="info-text">
-                        <h3>Easy find your shrimp</h3>
-                        <h5 class="mt-3">start at {{ formatPrice($min_price_product) }}/Kg</h5>
-                        <p class="pt-2">We recommend buying individually frozen (IQF), head-off, peel-on shrimp for most
-                            preparations.</p>
+                        <h3>Easy find your Sheep and Aqiqah Packet</h3>
+                        <h5 class="mt-3">start at {{ formatPrice($min_price_product) }}</h5>
+                        <p class="pt-2">We recommend buying Sheep For Qurban And Aqiqah</p>
                         <div class="inf-btn pro">
                             <a href="/login" class="btn btn-pro btn-secondary btn-lg">Get Started</a>
                         </div>
@@ -104,8 +103,8 @@
     <section class="featured portfolio bg-white-2 rec-pro">
         <div class="container-fluid">
             <div class="sec-title">
-                <h2><span>Shrimp for </span>Sale</h2>
-                <p>We sell frozen shrimp and fresh shrimp</p>
+                <h2><span>Sheep for </span>Sale</h2>
+                <p>We sell Sheep and Aqiqah</p>
             </div>
             <div class="portfolio col-xl-12">
                 <div class="slick-lancers2">
@@ -130,21 +129,22 @@
                                         </p>
                                         <!-- homes List -->
                                         @if($product->productDetails()->count() > 0)
+                                        <span>{{ $product['description'] }}</span>
                                             <ul class="homes-list clearfix">
                                                 <li class="the-icons">
                                                     <i class="fas fa-box mr-2"></i>
-                                                    <span>{{ $product->productDetails()->sum('stock') }} Kg</span>
+                                                    {{-- <span>{{ $product->productDetails()->sum('stock') }}</span> --}}
                                                 </li>
                                             </ul>
                                             <div class="price-properties footer pt-3 pb-0">
                                                 <h3 class="title mt-3" style="text-transform: none">
                                                     @if($product->productDetails()->min('price') === $product->productDetails()->max('price'))
                                                         <a href="#">{{ formatPrice($product->productDetails()->min('price')) }}
-                                                            /Kg</a>
+                                                            </a>
                                                     @else
                                                         <a href="#">{{ formatPrice($product->productDetails()->min('price')) }}
                                                             to {{ formatPrice($product->productDetails()->max('price')) }}
-                                                            /Kg</a>
+                                                            </a>
                                                     @endif
                                                 </h3>
                                             </div>
