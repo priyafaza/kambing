@@ -101,14 +101,20 @@
                             </a>
                           </li>
                           <li class="nav-item">
+                            <a href="{{ route('withdrawal.index') }}" class="nav-link">
+                              <i class="far fa-edit nav-icon"></i>
+                              <p>Withdrawal Approf</p>
+                            </a>
+                          </li>
+                          <li class="nav-item">
                             <a href="{{ route('datasaving.index') }}" class="nav-link">
                               <i class="far fa-user nav-icon"></i>
                               <p>Data User Saving</p>
                             </a>
                           </li>
+
                         </ul>
                       </li>
-
                     <hr>
 
                     <li class="nav-item">

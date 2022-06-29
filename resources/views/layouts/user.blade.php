@@ -84,6 +84,15 @@
                         </a>
                     </li>
 
+                    <li class="nav-item">
+                        <a href="{{ route('my.withdrawal') }}" class="nav-link">
+                            <i class="nav-icon fas fa-edit"></i>
+                            <p>
+                                Withdrawal
+                            </p>
+                        </a>
+                    </li>
+
                     <hr>
 
                     <li class="nav-item">

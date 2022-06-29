@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\AdminSavingController;
 use App\Http\Controllers\AdminDataSavingController;
+use App\Http\Controllers\WalletController;
 use App\Models\Product;
 use App\Models\ProductDetail;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +41,7 @@ Route::post('/my/order/new', [HomeController::class, 'addProduct'])->name('my.or
 Route::post('/add-to-cart', [HomeController::class, 'addToCart']);
 Route::post('/remove-from-cart/{id}', [HomeController::class, 'removeFromCart']);
 Route::post('/create-order', [HomeController::class, 'submitOrder']);
+Route::get('/mywithdrawal', [HomeController::class, 'withdrawalUser'])->name('my.withdrawal');
 Route::get('/my/saving', [SavingController::class, 'index'])->name('my.saving');
 Route::post('/my/saving/store', [SavingController::class, 'store'])->name('my.saving.store');
 Route::get('/my/saving/detail/{saving}', [SavingController::class, 'detail'])->name('my.saving.detail');
@@ -72,6 +74,11 @@ Route::group(['middleware' => ['is_admin']], function () {
     Route::apiResource('saving', AdminSavingController::class, [
         'only' => ['index'],
     ]);
+
+    Route::apiResource('withdrawal', WalletController::class, [
+        'only' => ['index'],
+    ]);
+
     Route::patch('saving/update/{transaction}',[AdminSavingController::class,'update'])->name('saving.update');
     Route::apiResource('datasaving', AdminDataSavingController::class, [
         'only' => ['index', 'show'],

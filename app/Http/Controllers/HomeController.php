@@ -163,4 +163,8 @@ class HomeController extends Controller
 
         return redirect()->route('my.order.detail', $order['id'])->withMessage('Payment proof uploaded');
     }
+
+    public function withdrawalUser(){
+        return view('saving.withdrawal');
+    }
 }
