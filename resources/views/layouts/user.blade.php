@@ -75,6 +75,15 @@
                         </a>
                     </li>
 
+                    <li class="nav-item">
+                        <a href="{{ route('my.saving') }}" class="nav-link">
+                            <i class="nav-icon fas fa-wallet"></i>
+                            <p>
+                                Saving
+                            </p>
+                        </a>
+                    </li>
+
                     <hr>
 
                     <li class="nav-item">

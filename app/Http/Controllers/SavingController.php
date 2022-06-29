@@ -8,6 +8,16 @@ class SavingController extends Controller
 {
     public function index()
     {
-    return view('saving.index', compact('saving'));
+    return view('saving.index');
     }
+    public function detail()
+    {
+    return view('saving.detail');
+    }
+    public function upload()
+    {
+    return view('saving.upload');
+    }
+
+
 }

@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SavingController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReportController;
 use App\Models\Product;
 use App\Models\ProductDetail;
+use App\Models\Saving;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,6 +39,12 @@ Route::post('/my/order/new', [HomeController::class, 'addProduct'])->name('my.or
 Route::post('/add-to-cart', [HomeController::class, 'addToCart']);
 Route::post('/remove-from-cart/{id}', [HomeController::class, 'removeFromCart']);
 Route::post('/create-order', [HomeController::class, 'submitOrder']);
+Route::get('/my/saving', [SavingController::class, 'index'])->name('my.saving');
+Route::get('/my/saving/detail', [SavingController::class, 'detail'])->name('my.saving.detail');
+Route::get('/my/saving/upload', [SavingController::class, 'upload'])->name('my.saving.upload');
+
+
+
 
 Route::group(['middleware' => ['is_admin']], function () {
 
