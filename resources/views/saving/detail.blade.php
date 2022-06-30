@@ -36,6 +36,7 @@
                                         <td>Periode rutin menabung</td>
                                         <td colspan="2">{{ $saving['trans_period'] }} </td>
                                     </tr>
+                                    @if($saving['progress_percent'] < 100)
                                     <tr>
                                         <td>Rekomendasi menabung {{ $saving['trans_period'] }}</td>
                                         <td colspan="2">{{ formatPrice($saving['recommendation_amount']) }} setiap
@@ -49,6 +50,7 @@
                                             %)
                                         </td>
                                     </tr>
+                                    @endif
                                     </tbody>
                                 </table>
                             </div>

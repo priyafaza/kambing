@@ -44,8 +44,8 @@ class Saving extends Model
     private function total()
     {
         return $this->transactions()
-            ->where('category',Transaction::CATEGORY_DEPOSIT)
-            ->where('status',Transaction::STATUS_SUCCESS)
+            ->where('category', Transaction::CATEGORY_DEPOSIT)
+            ->where('status', Transaction::STATUS_SUCCESS)
             ->sum('amount');
     }
 
@@ -59,14 +59,18 @@ class Saving extends Model
         if (now() > $this['due_date']) {
             return 'Target tidak tercapai';
         } else {
-            if ($this['period'] === self::PERIOD_DAILY) {
-                return now()->diffInDays($this['due_date']) . ' hari lagi';
-            } else if ($this['period'] === self::PERIOD_WEEKLY) {
-                return now()->diffInWeeks($this['due_date']) . ' minggu lagi';
-            } else if ($this['period'] === self::PERIOD_MONTHLY) {
-                return now()->diffInMonths($this['due_date']) . ' bulan lagi';
+            if ($this->progressPercent() >= 100) {
+                return 'Target sudah tercapai';
             } else {
-                return null;
+                if ($this['period'] === self::PERIOD_DAILY) {
+                    return now()->diffInDays($this['due_date']) . ' hari lagi';
+                } else if ($this['period'] === self::PERIOD_WEEKLY) {
+                    return now()->diffInWeeks($this['due_date']) . ' minggu lagi';
+                } else if ($this['period'] === self::PERIOD_MONTHLY) {
+                    return now()->diffInMonths($this['due_date']) . ' bulan lagi';
+                } else {
+                    return null;
+                }
             }
         }
     }
@@ -100,6 +104,11 @@ class Saving extends Model
     }
 
     public function getProgressPercentAttribute()
+    {
+        return $this->progressPercent() > 100 ? 100 : $this->progressPercent();
+    }
+
+    public function progressPercent()
     {
         return round($this->total() / $this['target'] * 100, 2);
     }
