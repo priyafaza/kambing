@@ -100,15 +100,15 @@
     <!-- END SECTION INFO-HELP -->
 
     <!-- START SECTION PROPERTIES FOR SALE -->
+    @foreach($products as $product)
     <section class="featured portfolio bg-white-2 rec-pro">
         <div class="container-fluid">
             <div class="sec-title">
-                <h2><span>Sheep for </span>Sale</h2>
-                <p>We sell Sheep and Aqiqah</p>
+                <h2><span>{{ $product['name'] }}</span></h2>
             </div>
             <div class="portfolio col-xl-12">
                 <div class="slick-lancers2">
-                    @foreach($products as $product)
+                    @foreach($product->productDetails as $productDetail)
                         <div class="agents-grid">
                             <div class="landscapes">
                                 <div class="project-single">
@@ -116,39 +116,27 @@
                                         <div class="homes">
                                             <!-- homes img -->
                                             <a href="#" class="homes-img">
-                                                {{-- <img src="{{ $product['image'] }}" alt="home-1" class="img-responsive"> --}}
+                                                 <img src="{{ $productDetail['image'] }}" alt="home-1" class="img-responsive">
                                             </a>
                                         </div>
                                     </div>
                                     <!-- homes content -->
                                     <div class="homes-content">
                                         <!-- homes address -->
-                                        <h3><a href="#">{{ $product['name'] }}</a></h3>
-                                        <p class="homes-address mb-3">
-                                            <i class="fa fa-question-circle mr-2"></i><span> {{ $product['summary'] }}</span>
-                                        </p>
+                                        <h3><a href="#">{{ $productDetail['name'] }}</a></h3>
                                         <!-- homes List -->
-                                        @if($product->productDetails()->count() > 0)
-                                        <span>{{ $product['description'] }}</span>
-                                            <ul class="homes-list clearfix">
-                                                <li class="the-icons">
-                                                    <i class="fas fa-box mr-2"></i>
-                                                    {{-- <span>{{ $product->productDetails()->sum('stock') }}</span> --}}
-                                                </li>
-                                            </ul>
-                                            <div class="price-properties footer pt-3 pb-0">
-                                                <h3 class="title mt-3" style="text-transform: none">
-                                                    @if($product->productDetails()->min('price') === $product->productDetails()->max('price'))
-                                                        <a href="#">{{ formatPrice($product->productDetails()->min('price')) }}
-                                                            </a>
-                                                    @else
-                                                        <a href="#">{{ formatPrice($product->productDetails()->min('price')) }}
-                                                            to {{ formatPrice($product->productDetails()->max('price')) }}
-                                                            </a>
-                                                    @endif
-                                                </h3>
-                                            </div>
-                                        @endif
+                                        <span>{{ $productDetail['detail'] }}</span>
+                                        <ul class="homes-list clearfix">
+                                            <li class="the-icons">
+                                                <i class="fas fa-box mr-2"></i>
+                                                 <span>{{ $productDetail['stock'] }}</span>
+                                            </li>
+                                        </ul>
+                                        <div class="price-properties footer pt-3 pb-0">
+                                            <h3 class="title mt-3" style="text-transform: none">
+                                                <a href="#">{{ formatPrice($productDetail['price']) }}</a>
+                                            </h3>
+                                        </div>
                                     </div>
                                     <div class="inf-btn pro" style="text-align: center">
                                         <a href="/login" class="col-12 btn btn-pro btn-secondary btn-lg">Beli</a>
@@ -162,6 +150,7 @@
         </div>
     </section>
     <!-- END SECTION PROPERTIES FOR SALE -->
+    @endforeach
 
     <!-- START SECTION WHY CHOOSE US -->
     <section class="how-it-works bg-white">
