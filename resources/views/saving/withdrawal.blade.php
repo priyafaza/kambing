@@ -34,6 +34,7 @@
                             <th>Amount</th>
                             <th>Withdrawal Proof</th>
                             <th>Status</th>
+                            <th>Reason Cancel</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -44,6 +45,7 @@
                                 <td>{{ formatPrice($transaction['amount']) }}</td>
                                 <td>{!! $transaction['payment_proof_link'] !!}</td>
                                 <td>{{ $transaction['status'] }}</td>
+                                <td></td>
                                 <td>
                                     @if($transaction['status'] === \App\Models\Transaction::STATUS_WAITING_APPROVAL)
                                         <a href="#"

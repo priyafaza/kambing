@@ -21,6 +21,7 @@
                                 <th>Amount</th>
                                 <th>Payment Proof</th>
                                 <th>Action</th>
+                                <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -39,6 +40,12 @@
                                             </button>
                                         @endif
                                     </td>
+                                    <td>
+                                        <button class="btn btn-danger" data-toggle="modal" data-target="#cancelWithdrawal"><i
+                                        class="fas fa-trash"></i>
+                                        cancel
+                                        </button>
+                            </td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -81,6 +88,33 @@
                             <label>Image</label>
                             <input name="payment_proof" type="file" class="form-control"
                                    accept="image/*" required>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="cancelWithdrawal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Alasan Cancel</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <form id="updatePayment" action="#" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="_method" value="PATCH">
+                    <div class="modal-body">
+                        @csrf
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea class="form-control" rows="6" name="description" required></textarea>
                         </div>
 
                     </div>
