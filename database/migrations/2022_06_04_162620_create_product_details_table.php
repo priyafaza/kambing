@@ -17,6 +17,7 @@ class CreateProductDetailsTable extends Migration
         Schema::create('product_details', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Product::class)->constrained()->cascadeOnDelete();
+            $table->string('image')->nullable();
             $table->unsignedInteger('size');
             $table->unsignedDouble('price');
             $table->unsignedInteger('stock');

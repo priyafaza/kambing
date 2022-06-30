@@ -116,7 +116,7 @@
                                         <div class="homes">
                                             <!-- homes img -->
                                             <a href="#" class="homes-img">
-                                                <img src="{{ $product['image'] }}" alt="home-1" class="img-responsive">
+                                                {{-- <img src="{{ $product['image'] }}" alt="home-1" class="img-responsive"> --}}
                                             </a>
                                         </div>
                                     </div>
@@ -149,6 +149,9 @@
                                                 </h3>
                                             </div>
                                         @endif
+                                    </div>
+                                    <div class="inf-btn pro" style="text-align: center">
+                                        <a href="/login" class="col-12 btn btn-pro btn-secondary btn-lg">Beli</a>
                                     </div>
                                 </div>
                             </div>

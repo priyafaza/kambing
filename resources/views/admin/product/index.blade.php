@@ -18,7 +18,7 @@
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                             <tr>
-                                <th>Image</th>
+                                {{-- <th>Image</th> --}}
                                 <th>Name</th>
                                 <th>Summary</th>
                                 <th>Action</th>
@@ -27,7 +27,7 @@
                             <tbody>
                             @foreach($products as $product)
                                 <tr>
-                                    <td><img src="{{ $product['image'] }}" style="height: 50px; width: auto"></td>
+                                    {{-- <td><img src="{{ $product['image'] }}" style="height: 50px; width: auto"></td> --}}
                                     <td>{{ $product['name'] }}</td>
                                     <td>{{ $product['summary'] }}</td>
                                     <td>
@@ -60,11 +60,7 @@
                 <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
                     <div class="modal-body">
                         @csrf
-                        <div class="form-group">
-                            <label>Image</label>
-                            <input name="image" type="file" class="form-control"
-                                   accept="image/*" required>
-                        </div>
+
                         <div class="form-group">
                             <label>Name</label>
                             <input type="text" class="form-control" name="name" required>

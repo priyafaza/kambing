@@ -25,20 +25,13 @@ class ProductController extends Controller
             'name' => 'required|string',
             'summary' => 'required',
             'description' => 'required',
-            'image' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:200'
         ]);
 
         $product = new Product;
         $product['name'] = $request['name'];
         $product['summary'] = $request['summary'];
         $product['description'] = $request['description'];
-        $image_path = null;
-        if ($request->file('image') != '') {
-            $main_image = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
-            $request->file('image')->move(storage_path('app/public/images/profile'), $main_image);
-            $image_path = '/storage/images/profile/' . $main_image;
-        }
-        $product['image'] = $image_path;
+
         $product->save();
 
         return redirect()->back()->withMessage('Product created');
@@ -56,6 +49,8 @@ class ProductController extends Controller
             'detail'=>'required|string',
             'stock'=>'required|integer',
             'price'=>'required|integer',
+            'image' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:200'
+
         ]);
 
         $productDetails = $product->productDetails()->where('name',$request['name'])->firstOrNew();
@@ -63,6 +58,13 @@ class ProductController extends Controller
         $productDetails['detail'] = $request['detail'];
         $productDetails['stock'] = $request['stock'];
         $productDetails['price'] = $request['price'];
+        $image_path = null;
+        if ($request->file('image') != '') {
+            $main_image = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move(storage_path('app/public/images/profile'), $main_image);
+            $image_path = '/storage/images/profile/' . $main_image;
+        }
+        $product['image'] = $image_path;
         $productDetails->save();
 
         return redirect()->back()->withMessage('Product Variant created');

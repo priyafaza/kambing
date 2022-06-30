@@ -20,7 +20,7 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body text-center">
-                                <img src="{{ $product['image'] }}" style="height: 100px; width: auto;">
+                                {{-- <img src="{{ $product['image'] }}" style="height: 100px; width: auto;"> --}}
                             </div>
                             <div class="card-footer">
                                 <div class="row">

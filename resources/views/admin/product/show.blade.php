@@ -46,6 +46,7 @@
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                             <tr>
+                                <th>image</th>
                                 <th>Name</th>
                                 <th>Detail</th>
                                 <th>Price</th>
@@ -56,6 +57,7 @@
                             <tbody>
                             @foreach($product->productDetails()->get() as $productVariant)
                                 <tr>
+                                    <td><img src="{{ $productVariant['image'] }}" style="height: 50px; width: auto"></td>
                                     <td>{{ $productVariant['name'] }}</td>
                                     <td>{{ $productVariant['detail'] }}</td>
                                     <td>{{ $productVariant['formatted_price'] }}</td>
@@ -100,9 +102,14 @@
                     <h4 class="modal-title">Add Product Variant</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <form action="{{ route('productVariant.add', $product['id']) }}" method="POST">
+                <form action="{{ route('productVariant.add', $product['id']) }}" method="POST" enctype="multipart/form-data">
                     <div class="modal-body">
                         @csrf
+                        <div class="form-group">
+                            <label>Image</label>
+                            <input name="image" type="file" class="form-control"
+                                   accept="image/*" required>
+                        </div>
                         <div class="form-group">
                             <label>Name</label>
                             <input type="text" min="0" class="form-control" name="name" required>
