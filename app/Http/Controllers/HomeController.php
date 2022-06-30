@@ -176,12 +176,17 @@ class HomeController extends Controller
     {
         $wallet = $request->user()->wallet;
         $request->validate([
-            'amount' => 'required|integer:min:10000|max:'.$wallet['cash']
+            'amount' => 'required|integer:min:10000|max:'.$wallet['cash'],
+            'description' => 'required|string'
         ]);
+        $description = [
+            'alasan penarikan' => $request['description']
+        ];
         $wallet->transactions()->create([
             'amount' => $request['amount'],
             'category' => Transaction::CATEGORY_WITHDRAW,
             'status' => Transaction::STATUS_WAITING_APPROVAL,
+            'description' => json_encode($description)
         ]);
 
         return redirect()->back()->withMessage('Penarikan di proses, menunggu konfirmasi admin');

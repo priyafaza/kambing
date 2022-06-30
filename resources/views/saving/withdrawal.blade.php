@@ -34,7 +34,7 @@
                             <th>Amount</th>
                             <th>Withdrawal Proof</th>
                             <th>Status</th>
-                            <th>Reason Cancel</th>
+                            <th>Description</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -45,7 +45,13 @@
                                 <td>{{ formatPrice($transaction['amount']) }}</td>
                                 <td>{!! $transaction['payment_proof_link'] !!}</td>
                                 <td>{{ $transaction['status'] }}</td>
-                                <td></td>
+                                <td>
+                                    @if($transaction['description'] !== null)
+                                        @foreach(json_decode($transaction['description'], true) as $name => $value)
+                                            {{ $name }} : {{ $value }}<br>
+                                        @endforeach
+                                    @endif
+                                </td>
                                 <td>
                                     @if($transaction['status'] === \App\Models\Transaction::STATUS_WAITING_APPROVAL)
                                         <a href="#"
@@ -84,7 +90,10 @@
                             <label>Amount Withdrawal</label>
                             <input type="number" class="form-control" min="0" name="amount" required>
                         </div>
-
+                        <div class="form-group">
+                            <label>Alasan penarikan</label>
+                            <textarea class="form-control" rows="4" name="description" required></textarea>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

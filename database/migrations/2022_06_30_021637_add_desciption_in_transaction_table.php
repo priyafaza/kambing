@@ -8,14 +8,14 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::table('orders', function (Blueprint $table) {
-            $table->string('number')->nullable();
+        Schema::table('transactions', function (Blueprint $table) {
+            $table->json('description')->nullable();
         });
     }
 
     public function down()
     {
-        Schema::table('orders', function (Blueprint $table) {
+        Schema::table('transactions', function (Blueprint $table) {
             //
         });
     }

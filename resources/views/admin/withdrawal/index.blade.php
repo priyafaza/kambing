@@ -21,7 +21,6 @@
                                 <th>Amount</th>
                                 <th>Payment Proof</th>
                                 <th>Action</th>
-                                <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -34,18 +33,18 @@
                                     <td>
                                         @if($transaction['status'] === \App\Models\Transaction::STATUS_WAITING_APPROVAL)
                                             <button class="btn btn-success"
-                                                    onclick="updatePayment('{{ $transaction['id'] }}','{{ $transaction['created_at']->format('Y-m-d H:i') }}','{{ $transaction['wallet']['user']['name'] }}','{{ formatPrice($transaction['amount']) }}')"
+                                                    onclick="updatePayment('{{ $transaction['id'] }}','{{ $transaction['created_at']->format('Y-m-d H:i') }}','{{ $transaction['wallet']['user']['name'] }}','{{ formatPrice($transaction['amount']) }}','{{ $transaction['description'] }}')"
                                                     data-toggle="modal" data-target="#addWithdrawal"><i
                                                     class="fas fa-plus"></i> Kirim Bukti Transfer
                                             </button>
+                                            <button class="btn btn-danger" data-toggle="modal"
+                                                    onclick="rejectWithdraw('{{ $transaction['id'] }}')"
+                                                    data-target="#cancelWithdrawal"><i
+                                                    class="fas fa-trash"></i>
+                                                cancel
+                                            </button>
                                         @endif
                                     </td>
-                                    <td>
-                                        <button class="btn btn-danger" data-toggle="modal" data-target="#cancelWithdrawal"><i
-                                        class="fas fa-trash"></i>
-                                        cancel
-                                        </button>
-                            </td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -61,11 +60,20 @@
     </section>
 
     <script>
-        function updatePayment(transaction_id, date, name, amount) {
+        function updatePayment(transaction_id, date, name, amount, description) {
             $('#date').text(date);
             $('#name').text(name);
             $('#amount').text(amount);
             $('#updatePayment').attr('action', '/withdrawal/update/' + transaction_id);
+            var array_description =  JSON.parse(description);
+            let detail = '';
+            for (let key in array_description){
+                detail += key+' : '+array_description[key]+'<br>'
+            }
+            $('#description').html(detail);
+        }
+        function rejectWithdraw(transaction_id) {
+            $('#rejectPayment').attr('action', '/withdrawal/update/' + transaction_id+'/reject');
         }
     </script>
 
@@ -84,6 +92,7 @@
                         <p>Tanggal : <b id="date"></b></p>
                         <p>Nama : <b id="name"></b></p>
                         <p>Jumlah : <b id="amount"></b></p>
+                        <p id="description"></p>
                         <div class="form-group">
                             <label>Image</label>
                             <input name="payment_proof" type="file" class="form-control"
@@ -108,12 +117,12 @@
                     <h4 class="modal-title">Alasan Cancel</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <form id="updatePayment" action="#" method="POST" enctype="multipart/form-data">
+                <form id="rejectPayment" action="#" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="_method" value="PATCH">
                     <div class="modal-body">
                         @csrf
                         <div class="form-group">
-                            <label>Description</label>
+                            <label>Alasan penarikan tidak diterima</label>
                             <textarea class="form-control" rows="6" name="description" required></textarea>
                         </div>
 

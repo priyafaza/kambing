@@ -35,5 +35,23 @@ class WalletController extends Controller
 
         return redirect()->route('withdrawal.index')->withMessage('Payment proof uploaded');
     }
+
+    public function reject(Request $request, Transaction $transaction)
+    {
+        $request->validate([
+            'description' => 'required|string'
+        ]);
+
+        if($transaction['description'] !== null) {
+            $description = json_decode($transaction['description'], true);
+        }
+        $description['alasan penolakan'] = $request['description'];
+
+        $transaction['description'] = json_encode($description);
+        $transaction['status'] = Transaction::STATUS_FAILED;
+        $transaction->save();
+
+        return redirect()->route('withdrawal.index')->withMessage('Withdraw rejected');
+    }
 }
 

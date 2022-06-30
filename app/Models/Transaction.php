@@ -15,6 +15,7 @@ class Transaction extends Model
         'category',
         'payment_proof',
         'status',
+        'description'
     ];
 
     const CATEGORY_BUY = 'buy';

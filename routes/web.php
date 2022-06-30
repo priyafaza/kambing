@@ -82,6 +82,7 @@ Route::group(['middleware' => ['is_admin']], function () {
         'only' => ['index'],
     ]);
     Route::patch('withdrawal/update/{transaction}',[WalletController::class,'confirm'])->name('withdrawal.confirm');
+    Route::patch('withdrawal/update/{transaction}/reject',[WalletController::class,'reject'])->name('withdrawal.reject');
 
     Route::apiResource('datasaving', AdminDataSavingController::class, [
         'only' => ['index', 'show'],
