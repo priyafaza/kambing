@@ -73,7 +73,9 @@
                                                     <form
                                                         action="{{ route('productVariant.remove', $productDetail['id']) }}"
                                                         method="POST">
-                                                        @csrf
+                                                        @csrf\
+                                                        <a href="" class="btn btn-sm btn-success" data-toggle="modal" data-target="#updateImage"><i
+                                                            class="fas fa-pen"></i> Update Img</a>
                                                         <input type="hidden" name="_method" value="DELETE">
                                                         <button type="submit" class="btn btn-sm btn-danger"><i
                                                                 class="fas fa-trash"></i> Delete</button>
@@ -139,4 +141,34 @@
 
         </div>
     </div>
+
+
+    <div id="updateImage" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Update Image</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <form action="#" method="POST" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        @csrf
+                        <div class="form-group">
+                            <label>Image</label>
+                            <input name="image" type="file" class="form-control"
+                                   accept="image/*" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
 @stop
