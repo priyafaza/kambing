@@ -1,6 +1,6 @@
 @extends('layouts.user')
 
-@section('title') My Withdrawal @stop
+@section('title') My Wallet @stop
 
 @section('content')
     <section class="content">
@@ -8,35 +8,36 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Withdrawal</h3>
+                        <h3 class="card-title">Wallet</h3>
                     </div>
                 </div>
 
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-12">
-                                <h2>Saldo : {{ formatPrice($wallet['cash']) }}</h2>
+                            <div class="col-12 text-center">
+                                <h2>Saldo</h2>
+                                <h1>{{ formatPrice($wallet['cash']) }}</h1>
+                                <hr>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 text-center">
+                                <button class="btn btn-danger btn-block" data-toggle="modal" data-target="#addWithdrawal"><i
+                                        class="fas fa-wallet"></i>
+                                    Withdrawal
+                                </button>
+                            </div>
+                            <div class="col-6 text-center">
+                                <a href="/my/saving" class="btn btn-success btn-block"><i
+                                        class="fas fa-plus"></i>
+                                    Menabung
+                                </a>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-12">
-                    <div class="col-6">
-                    <button class="btn btn-success" data-toggle="modal" data-target="#addWithdrawal"><i
-                            class="fas fa-wallet"></i>
-                        Withdrawal
-                    </button>
-                    </div>
-                    <div class="col-6">
-                        <button class="btn btn-success" data-toggle="modal" data-target="#"><i
-                                class="fas fa-wallet"></i>
-                        Menabung
-                        </button>
-                    </div>
                 </div>
-                </div>
-
                 <!-- /.card-header -->
                 <div class="card-body">
                     <table id="example1" class="table table-bordered table-striped">
