@@ -49,7 +49,7 @@ class ProductController extends Controller
             'detail'=>'required|string',
             'stock'=>'required|integer',
             'price'=>'required|integer',
-            'image' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:200'
+            'image' => 'required|file|mimes:jpeg,png,jpg,gif,svg|max:1000'
 
         ]);
 
@@ -82,12 +82,19 @@ class ProductController extends Controller
     public function updateVariant(Request $request, ProductDetail $productDetail)
     {
         $request->validate([
-            'stock'=>'required|integer|min:1'
+            'stock'=>'required|integer|min:1',
+            'image' => 'nullable|file|mimes:jpeg,png,jpg,gif,svg|max:1000'
         ]);
 
+        if ($request->file('image') != '') {
+            $main_image = uniqid() . '.' . $request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move(storage_path('app/public/images/profile'), $main_image);
+            $image_path = '/storage/images/profile/' . $main_image;
+            $productDetail['image'] = $image_path;
+        }
         $productDetail['stock'] = $request['stock'];
         $productDetail->save();
 
-        return redirect()->back()->withMessage('Product Variant stocks been updated');
+        return redirect()->back()->withMessage('Product Variant updated');
     }
 }

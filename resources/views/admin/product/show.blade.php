@@ -73,9 +73,9 @@
                                                     <form
                                                         action="{{ route('productVariant.remove', $productDetail['id']) }}"
                                                         method="POST">
-                                                        @csrf\
-                                                        <a href="" class="btn btn-sm btn-success" data-toggle="modal" data-target="#updateImage"><i
-                                                            class="fas fa-pen"></i> Update Img</a>
+                                                        @csrf
+                                                        <button type="button" onclick="$('#updateImg').attr('action','/product/updateVariant/{{ $productDetail['id'] }}'); $('#stockVariant').val('{{ $productDetail['stock'] }}')" class="btn btn-sm btn-success" data-toggle="modal" data-target="#updateImage"><i
+                                                            class="fas fa-pen"></i> Update Img</button>
                                                         <input type="hidden" name="_method" value="DELETE">
                                                         <button type="submit" class="btn btn-sm btn-danger"><i
                                                                 class="fas fa-trash"></i> Delete</button>
@@ -152,9 +152,11 @@
                     <h4 class="modal-title">Update Image</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <form action="#" method="POST" enctype="multipart/form-data">
+                <form id="updateImg" action="#" method="POST" enctype="multipart/form-data">
                     <div class="modal-body">
                         @csrf
+                        <input type="hidden" name="_method" value="PATCH">
+                        <input type="hidden" name="stock" id="stockVariant" value="0">
                         <div class="form-group">
                             <label>Image</label>
                             <input name="image" type="file" class="form-control"
