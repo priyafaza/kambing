@@ -54,7 +54,7 @@
                                 </td>
                                 <td>
                                     @if($transaction['status'] === \App\Models\Transaction::STATUS_WAITING_APPROVAL)
-                                        <a href="#"
+                                        <a href="{{ route('my.withdrawal.cancel', $transaction['id']) }}"
                                            class="btn btn-danger">
                                             <i class="fas fa-trash"></i> cancel
                                         </a>

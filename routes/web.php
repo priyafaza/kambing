@@ -43,6 +43,7 @@ Route::post('/remove-from-cart/{id}', [HomeController::class, 'removeFromCart'])
 Route::post('/create-order', [HomeController::class, 'submitOrder']);
 Route::get('/my/withdrawal', [HomeController::class, 'withdrawalUser'])->name('my.withdrawal');
 Route::post('/my/withdrawal', [HomeController::class, 'withdrawalUserSubmit'])->name('my.withdrawal.submit');
+Route::get('/my/withdrawal/{transaction}/cancel', [HomeController::class, 'withdrawalUserCancel'])->name('my.withdrawal.cancel');
 Route::get('/my/saving', [SavingController::class, 'index'])->name('my.saving');
 Route::post('/my/saving/store', [SavingController::class, 'store'])->name('my.saving.store');
 Route::get('/my/saving/detail/{saving}', [SavingController::class, 'detail'])->name('my.saving.detail');

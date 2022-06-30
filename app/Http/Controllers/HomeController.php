@@ -64,7 +64,7 @@ class HomeController extends Controller
         $product = Product::findOrFail($request['product_id']);
         $productDetails = $product->productDetails()->get()->toArray();
         $cart = new Cart();
-        if($cart->whereExist($product['id'])) {
+        if ($cart->whereExist($product['id'])) {
             return redirect()->back()->withErrors('You Only Can Choice 1 Item');
         } else {
             $cart->create([
@@ -89,22 +89,22 @@ class HomeController extends Controller
     public function submitOrder(Request $request)
     {
         $request->validate([
-            'product_detail_id'=>'required',
-            'amount'=>'required',
-            'number'=>'required|string',
-            'shipping_address'=>'required|string',
-            'shipping' => ['required','string',
+            'product_detail_id' => 'required',
+            'amount' => 'required',
+            'number' => 'required|string',
+            'shipping_address' => 'required|string',
+            'shipping' => ['required', 'string',
                 Rule::in(['DI AMBIL', 'DI ANTAR']),
             ],
         ]);
 
-        for($i = 0; $i < count($request['product_detail_id']); $i++) {
+        for ($i = 0; $i < count($request['product_detail_id']); $i++) {
             $productDetail = ProductDetail::find($request['product_detail_id'][$i]);
-            if($productDetail['stock'] < $request['amount'][$i]){
-                return redirect()->back()->withErrors('Stock product '.$productDetail->product['name'].' - '.$productDetail['detail'].' only '.$productDetail['stock'].' left');
+            if ($productDetail['stock'] < $request['amount'][$i]) {
+                return redirect()->back()->withErrors('Stock product ' . $productDetail->product['name'] . ' - ' . $productDetail['detail'] . ' only ' . $productDetail['stock'] . ' left');
             }
         }
-        DB::transaction(function () use($request) {
+        DB::transaction(function () use ($request) {
             $currentUser = $request->user();
             $order = $currentUser->orders()->where('status', 'draft')->first();
             $order['shipping'] = $request['shipping'];
@@ -135,9 +135,10 @@ class HomeController extends Controller
     {
         return view('order.show', compact('order'));
     }
+
     public function uploadForm(Order $order)
     {
-        if($order['status'] !== 'pending_payment'){
+        if ($order['status'] !== 'pending_payment') {
             abort(404);
         }
         return view('order.upload', compact('order'));
@@ -145,7 +146,7 @@ class HomeController extends Controller
 
     public function updatePayment(Request $request, Order $order)
     {
-        if($order['status'] !== 'pending_payment'){
+        if ($order['status'] !== 'pending_payment') {
             abort(404);
         }
 
@@ -165,10 +166,11 @@ class HomeController extends Controller
         return redirect()->route('my.order.detail', $order['id'])->withMessage('Payment proof uploaded');
     }
 
-    public function withdrawalUser(Request $request){
+    public function withdrawalUser(Request $request)
+    {
         $wallet = $request->user()->wallet;
         $wallet->load('transactions');
-        $transactions = $wallet->transactions()->where('category',Transaction::CATEGORY_WITHDRAW)->get();
+        $transactions = $wallet->transactions()->where('category', Transaction::CATEGORY_WITHDRAW)->get();
         return view('saving.withdrawal', compact('wallet', 'transactions'));
     }
 
@@ -176,7 +178,7 @@ class HomeController extends Controller
     {
         $wallet = $request->user()->wallet;
         $request->validate([
-            'amount' => 'required|integer:min:10000|max:'.$wallet['cash'],
+            'amount' => 'required|integer:min:10000|max:' . $wallet['cash'],
             'description' => 'required|string'
         ]);
         $description = [
@@ -190,5 +192,15 @@ class HomeController extends Controller
         ]);
 
         return redirect()->back()->withMessage('Penarikan di proses, menunggu konfirmasi admin');
+    }
+
+    public function withdrawalUserCancel(Request $request, Transaction $transaction)
+    {
+        if($transaction['status'] === Transaction::STATUS_WAITING_APPROVAL){
+            $transaction['status'] = Transaction::STATUS_CANCELLED;
+            $transaction->save();
+        }
+
+        return redirect()->back()->withMessage('Penarikan dibatalkan');
     }
 }
