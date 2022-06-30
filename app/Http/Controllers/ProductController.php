@@ -64,7 +64,7 @@ class ProductController extends Controller
             $request->file('image')->move(storage_path('app/public/images/profile'), $main_image);
             $image_path = '/storage/images/profile/' . $main_image;
         }
-        $product['image'] = $image_path;
+        $productDetails['image'] = $image_path;
         $productDetails->save();
 
         return redirect()->back()->withMessage('Product Variant created');
