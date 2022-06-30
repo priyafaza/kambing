@@ -26,7 +26,7 @@
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                             <tr>
-                                <th>Shipping Address</th>
+                                <th>Address</th>
                                 <th>Total item</th>
                                 <th>Option</th>
                                 <th>Amount</th>
