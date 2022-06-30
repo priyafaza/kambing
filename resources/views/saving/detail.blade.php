@@ -98,6 +98,10 @@
                                            class="btn btn-success">
                                             <i class="fas fa-eye"></i>
                                         </a>
+                                        <a href="{{ route('my.saving.cancel', $transaction['id']) }}"
+                                           class="btn btn-danger">
+                                            <i class="fas fa-trash"></i> cancel
+                                        </a>
                                     @endif
                                 </td>
                             </tr>

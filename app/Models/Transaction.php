@@ -48,7 +48,7 @@ class Transaction extends Model
                 $wallet->save();
             }
 
-            if($transaction['category'] === self::CATEGORY_WITHDRAW && $transaction['status'] === self::STATUS_FAILED){
+            if($transaction['category'] === self::CATEGORY_WITHDRAW && ($transaction['status'] === self::STATUS_FAILED || $transaction['status'] === self::STATUS_CANCELLED)){
                 $wallet = $transaction->wallet;
                 $wallet->cash += $transaction->amount;
                 $wallet->save();

@@ -62,6 +62,18 @@ class SavingController extends Controller
         return view('saving.upload', compact('transaction'));
     }
 
+    public function cancel(Request $request, Transaction $transaction)
+    {
+        $wallet = $request->user()->wallet;
+        if ($transaction['status'] !== Transaction::STATUS_PENDING && $transaction['wallet_id'] !== $wallet['id']) {
+            abort(404);
+        }
+        $transaction['status'] = Transaction::STATUS_CANCELLED;
+        $transaction->save();
+
+        return redirect()->back()->withMessage('Tabungan dibatalkan');
+    }
+
     public function updatePayment(Request $request, Transaction $transaction)
     {
         $wallet = $request->user()->wallet;
