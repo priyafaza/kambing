@@ -9,18 +9,10 @@
                 <div class="row">
                     <!-- /.col -->
                     @foreach($products as $product)
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="card card-success">
                             <div class="card-header">
                                 <h3 class="card-title">{{ $product['name'] }}</h3>
-
-                                <div class="card-tools">
-                                </div>
-                                <!-- /.card-tools -->
-                            </div>
-                            <!-- /.card-header -->
-                            <div class="card-body text-center">
-                                {{-- <img src="{{ $product['image'] }}" style="height: 100px; width: auto;"> --}}
                             </div>
                             <div class="card-footer">
                                 <div class="row">
@@ -29,28 +21,27 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-12">
-                                        <table class="table table-bordered table-striped">
-                                            <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Detail</th>
-                                                <th>Price /Kg</th>
-                                                <th>Stock</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            @foreach($product->productDetails()->get() as $productDetail)
-                                                <tr>
-                                                    <td>{{ $productDetail['name'] }}</td>
-                                                    <td>{{ $productDetail['detail'] }}</td>
-                                                    <td>{{ $productDetail['formatted_price'] }}</td>
-                                                    <td>{{ $productDetail['stock'] }}</td>
-                                                </tr>
-                                            @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                    @foreach($product->productDetails()->get() as $productDetail)
+                                        <div class="col-md-4">
+                                            <div class="card card-primary">
+                                                <div class="card-header">
+                                                    <h4 class="card-title">{{ $productDetail['name'] }}</h4>
+                                                </div>
+                                                <div class="card-body text-center">
+                                                    <img src="{{ $productDetail['image'] }}" style="height: 100px; width: auto;">
+                                                </div>
+                                                <div class="card-footer">
+                                                    <div class="row">
+                                                        <div class="col-12 text-left">
+                                                            <p><i class="fas fa-info-circle"></i> Detail : {{ $productDetail['detail'] }}</p>
+                                                            <p><i class="fas fa-box"></i> Stock : {{ $productDetail['stock'] }}</p>
+                                                            <p><i class="fas fa-coins"></i> Price : {{ formatPrice($productDetail['price']) }}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
                             <!-- /.card-body -->

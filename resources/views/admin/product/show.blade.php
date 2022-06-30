@@ -43,46 +43,48 @@
                         <button class="btn btn-success" data-toggle="modal" data-target="#addData"><i
                                 class="fas fa-plus"></i> Add Product Variant
                         </button>
-                        <table id="example1" class="table table-bordered table-striped">
-                            <thead>
-                            <tr>
-                                <th>image</th>
-                                <th>Name</th>
-                                <th>Detail</th>
-                                <th>Price</th>
-                                <th>Stock</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($product->productDetails()->get() as $productVariant)
-                                <tr>
-                                    <td><img src="{{ $productVariant['image'] }}" style="height: 50px; width: auto"></td>
-                                    <td>{{ $productVariant['name'] }}</td>
-                                    <td>{{ $productVariant['detail'] }}</td>
-                                    <td>{{ $productVariant['formatted_price'] }}</td>
-                                    <td>
-                                        <form action="{{ route('productVariant.update', $productVariant['id']) }}" method="POST">
-                                            @csrf
-                                            <input type="hidden" name="_method" value="PATCH">
-                                            <input type="number" name="stock" value="{{ $productVariant['stock'] }}" required onkeyup="$('#btn-update-productVariant-{{ $productVariant['id'] }}').show()">
-                                            <button type="submit" class="btn btn-sm btn-primary" style="display: none" id="btn-update-productVariant-{{ $productVariant['id'] }}">Update Stock</button>
-                                        </form>
-                                    </td>
-                                    <td>
-                                        <form
-                                            action="{{ route('productVariant.remove', $productVariant['id']) }}"
-                                            method="POST">
-                                            @csrf
-                                            <input type="hidden" name="_method" value="DELETE">
-                                            <button type="submit" class="btn btn-sm btn-danger"><i
-                                                    class="fas fa-trash"></i></button>
-                                        </form>
-                                    </td>
-                                </tr>
+                        <hr>
+                        <div class="row">
+                            @foreach($product->productDetails()->get() as $productDetail)
+                                <div class="col-md-4">
+                                    <div class="card card-primary">
+                                        <div class="card-header">
+                                            <h4 class="card-title">{{ $productDetail['name'] }}</h4>
+                                        </div>
+                                        <div class="card-body text-center">
+                                            <img src="{{ $productDetail['image'] }}" style="height: 100px; width: auto;">
+                                        </div>
+                                        <div class="card-footer">
+                                            <div class="row">
+                                                <div class="col-12 text-left">
+                                                    <p><i class="fas fa-info-circle"></i> Detail : {{ $productDetail['detail'] }}</p>
+                                                    <p><i class="fas fa-coins"></i> Price : {{ formatPrice($productDetail['price']) }}</p>
+                                                    <form class="form-group row" action="{{ route('productVariant.update', $productDetail['id']) }}" method="POST">
+                                                        @csrf
+                                                        <input type="hidden" name="_method" value="PATCH">
+                                                        <label class="col-4 mt-2"><i class="fas fa-box"></i> Stock :</label>
+                                                        <input type="number" class="form-control col-4" name="stock" value="{{ $productDetail['stock'] }}" required onkeyup="$('#btn-update-productVariant-{{ $productDetail['id'] }}').show()">
+                                                        <button type="submit" class="btn btn-sm btn-primary col-4" style="display: none" id="btn-update-productVariant-{{ $productDetail['id'] }}">Update</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12 text-center">
+                                                    <form
+                                                        action="{{ route('productVariant.remove', $productDetail['id']) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        <input type="hidden" name="_method" value="DELETE">
+                                                        <button type="submit" class="btn btn-sm btn-danger"><i
+                                                                class="fas fa-trash"></i> Delete</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             @endforeach
-                            </tbody>
-                        </table>
+                        </div>
                     </div>
                     <!-- /.card-body -->
                 </div>
