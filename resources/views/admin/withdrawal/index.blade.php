@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title') Withdrawal List Aprrofal @stop
+@section('title') Withdrawal List Approval @stop
 
 @section('content')
     <section class="content">
@@ -8,7 +8,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Withdrawal List Aprrofal</h3>
+                        <h3 class="card-title">Withdrawal List Approval</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
@@ -19,18 +19,28 @@
                                 <th>Date</th>
                                 <th>Name</th>
                                 <th>Amount</th>
+                                <th>Payment Proof</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
+                            @foreach($transactions as $transaction)
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td><button class="btn btn-success" data-toggle="modal" data-target="#addWithdrawal"><i
-                                        class="fas fa-plus"></i> Kirim Bukti Transfer
-                                </button></td>
+                                    <td>{{ $transaction['created_at']->format('Y-m-d H:i') }}</td>
+                                    <td>{{ $transaction['wallet']['user']['name'] }}</td>
+                                    <td>{{ formatPrice($transaction['amount']) }}</td>
+                                    <td>{!! $transaction['payment_proof_link'] !!}</td>
+                                    <td>
+                                        @if($transaction['status'] === \App\Models\Transaction::STATUS_WAITING_APPROVAL)
+                                            <button class="btn btn-success"
+                                                    onclick="updatePayment('{{ $transaction['id'] }}','{{ $transaction['created_at']->format('Y-m-d H:i') }}','{{ $transaction['wallet']['user']['name'] }}','{{ formatPrice($transaction['amount']) }}')"
+                                                    data-toggle="modal" data-target="#addWithdrawal"><i
+                                                    class="fas fa-plus"></i> Kirim Bukti Transfer
+                                            </button>
+                                        @endif
+                                    </td>
                                 </tr>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -43,21 +53,33 @@
         <!-- /.row -->
     </section>
 
+    <script>
+        function updatePayment(transaction_id, date, name, amount) {
+            $('#date').text(date);
+            $('#name').text(name);
+            $('#amount').text(amount);
+            $('#updatePayment').attr('action', '/withdrawal/update/' + transaction_id);
+        }
+    </script>
+
     <div id="addWithdrawal" class="modal fade" role="dialog">
         <div class="modal-dialog">
-
-            <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Kirim Bukti Transfer</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <form action="#" method="POST" enctype="multipart/form-data">
+                <form id="updatePayment" action="#" method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="_method" value="PATCH">
                     <div class="modal-body">
                         @csrf
+                        <p>Update payment untuk transaksi</p>
+                        <p>Tanggal : <b id="date"></b></p>
+                        <p>Nama : <b id="name"></b></p>
+                        <p>Jumlah : <b id="amount"></b></p>
                         <div class="form-group">
                             <label>Image</label>
-                            <input name="image" type="file" class="form-control"
+                            <input name="payment_proof" type="file" class="form-control"
                                    accept="image/*" required>
                         </div>
 

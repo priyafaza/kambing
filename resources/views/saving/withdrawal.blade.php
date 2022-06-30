@@ -16,12 +16,13 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12">
-                                <h2>Saldo : </h2>
+                                <h2>Saldo : {{ formatPrice($wallet['cash']) }}</h2>
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-success" data-toggle="modal" data-target="#addWithdrawal"><i class="fas fa-wallet"></i>
-                         Withdrawal
+                    <button class="btn btn-success" data-toggle="modal" data-target="#addWithdrawal"><i
+                            class="fas fa-wallet"></i>
+                        Withdrawal
                     </button>
                 </div>
                 <!-- /.card-header -->
@@ -32,14 +33,27 @@
                             <th>Date Withdrawal</th>
                             <th>Amount</th>
                             <th>Withdrawal Proof</th>
+                            <th>Status</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
+                        @foreach($transactions as $transaction)
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{ $transaction['created_at']->format('Y-m-d H:i') }}</td>
+                                <td>{{ formatPrice($transaction['amount']) }}</td>
+                                <td>{!! $transaction['payment_proof_link'] !!}</td>
+                                <td>{{ $transaction['status'] }}</td>
+                                <td>
+                                    @if($transaction['status'] === \App\Models\Transaction::STATUS_WAITING_APPROVAL)
+                                        <a href="#"
+                                           class="btn btn-danger">
+                                            <i class="fas fa-trash"></i> cancel
+                                        </a>
+                                    @endif
+                                </td>
                             </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -61,12 +75,12 @@
                     <h4 class="modal-title">Withdrawal</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
-                <form action="#" method="POST">
+                <form action="{{ route('my.withdrawal.submit') }}" method="POST">
                     <div class="modal-body">
                         @csrf
                         <div class="form-group">
                             <label>Amount Withdrawal</label>
-                            <input type="number" class="form-control" name="withdrawal" required>
+                            <input type="number" class="form-control" min="0" name="amount" required>
                         </div>
 
                     </div>

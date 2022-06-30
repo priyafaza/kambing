@@ -30,13 +30,7 @@
                                     <td>{{ $transaction['wallet']['user']['name'] }}<br>Saldo : {{ formatPrice($transaction['wallet']['cash']) }}</td>
                                     <td>{{ $transaction['savingRelation']['name'] }}</td>
                                     <td>{{ formatPrice($transaction['amount']) }}</td>
-                                    <td>
-                                        @if($transaction['payment_proof'] !== null)
-                                            <a href="{{ $transaction['payment_proof'] }}">Lihat bukti transfer</a>
-                                        @else
-                                            Belum ada bukti transfer
-                                        @endif
-                                    </td>
+                                    <td>{!! $transaction['payment_proof_link'] !!}</td>
                                     <td>
                                         @if($transaction['status'] === \App\Models\Transaction::STATUS_WAITING_APPROVAL)
                                             <div class="row">

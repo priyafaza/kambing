@@ -56,7 +56,7 @@ class Transaction extends Model
         });
 
         static::created(function ($transaction){
-            if($transaction['category'] === self::CATEGORY_WITHDRAW && $transaction['status'] === self::STATUS_PENDING){
+            if($transaction['category'] === self::CATEGORY_WITHDRAW && ($transaction['status'] === self::STATUS_PENDING || $transaction['status'] === self::STATUS_WAITING_APPROVAL)){
                 $wallet = $transaction->wallet;
                 $wallet->cash -= $transaction->amount;
                 $wallet->save();
@@ -68,5 +68,14 @@ class Transaction extends Model
                 $wallet->save();
             }
         });
+    }
+
+    public function getPaymentProofLinkAttribute()
+    {
+        if($this['payment_proof'] !== null){
+            return '<a href="'.$this['payment_proof'].'">Lihat bukti transfer</a>';
+        } else {
+            return 'Belum ada bukti transfer';
+        }
     }
 }

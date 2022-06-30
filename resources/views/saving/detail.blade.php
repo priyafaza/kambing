@@ -84,13 +84,7 @@
                             <tr>
                                 <td>{{ $transaction['created_at']->format('Y-m-d H:i') }}</td>
                                 <td>{{ formatPrice($transaction['amount']) }}</td>
-                                <td>
-                                    @if($transaction['payment_proof'] !== null)
-                                        <a href="{{ $transaction['payment_proof'] }}">Lihat bukti transfer</a>
-                                    @else
-                                        Belum ada bukti transfer
-                                    @endif
-                                </td>
+                                <td>{!! $transaction['payment_proof_link'] !!}</td>
                                 <td>{{ $transaction['status'] }}</td>
                                 <td>
                                     @if($transaction['status'] === \App\Models\Transaction::STATUS_PENDING)

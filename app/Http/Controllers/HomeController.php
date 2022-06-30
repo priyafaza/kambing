@@ -6,6 +6,7 @@ use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductDetail;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -164,7 +165,25 @@ class HomeController extends Controller
         return redirect()->route('my.order.detail', $order['id'])->withMessage('Payment proof uploaded');
     }
 
-    public function withdrawalUser(){
-        return view('saving.withdrawal');
+    public function withdrawalUser(Request $request){
+        $wallet = $request->user()->wallet;
+        $wallet->load('transactions');
+        $transactions = $wallet->transactions()->where('category',Transaction::CATEGORY_WITHDRAW)->get();
+        return view('saving.withdrawal', compact('wallet', 'transactions'));
+    }
+
+    public function withdrawalUserSubmit(Request $request)
+    {
+        $wallet = $request->user()->wallet;
+        $request->validate([
+            'amount' => 'required|integer:min:10000|max:'.$wallet['cash']
+        ]);
+        $wallet->transactions()->create([
+            'amount' => $request['amount'],
+            'category' => Transaction::CATEGORY_WITHDRAW,
+            'status' => Transaction::STATUS_WAITING_APPROVAL,
+        ]);
+
+        return redirect()->back()->withMessage('Penarikan di proses, menunggu konfirmasi admin');
     }
 }
