@@ -14,15 +14,15 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <button class="btn btn-success" data-toggle="modal" data-target="#addWithdrawal"><i class="fas fa-plus"></i>
-                            Withdrawal
-                        </button>
                         <div class="row">
                             <div class="col-12">
                                 <h2>Saldo : </h2>
                             </div>
                         </div>
                     </div>
+                    <button class="btn btn-success" data-toggle="modal" data-target="#addWithdrawal"><i class="fas fa-wallet"></i>
+                         Withdrawal
+                    </button>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
@@ -52,7 +52,7 @@
         <!-- /.row -->
     </section>
 
-    <div id="addSaldo" class="modal fade" role="dialog">
+    <div id="addWithdrawal" class="modal fade" role="dialog">
         <div class="modal-dialog">
 
             <!-- Modal content-->
