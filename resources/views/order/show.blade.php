@@ -26,7 +26,7 @@
                                     Jalan MH Tamrin No 24<br>
                                     Kabat, Banyuwangi, Jawa Timur<br>
                                     Phone: (62) 81234567890<br>
-                                    Email: info@udang.com
+                                    Email: info@kambing.com
                                 </address>
                             </div>
                             <!-- /.col -->
@@ -94,7 +94,7 @@
                                     <table class="table">
                                         <tr>
                                             <th>Shipping Options</th>
-                                            <td>{{$order['shipping']}} (Free)</td>
+                                            <td>{{$order['shipping']}}</td>
                                         </tr>
                                         <tr>
                                             <th style="width:50%">Subtotal:</th>

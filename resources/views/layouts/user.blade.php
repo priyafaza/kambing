@@ -77,7 +77,7 @@
 
                     <li class="nav-item">
                         <a href="{{ route('my.saving') }}" class="nav-link">
-                            <i class="nav-icon fas fa-wallet"></i>
+                            <i class="nav-icon fas fa-pen"></i>
                             <p>
                                 Menabung
                             </p>
@@ -86,7 +86,7 @@
 
                     <li class="nav-item">
                         <a href="{{ route('my.withdrawal') }}" class="nav-link">
-                            <i class="nav-icon fas fa-edit"></i>
+                            <i class="nav-icon fas fa-wallet"></i>
                             <p>
                                 Wallet
                             </p>
