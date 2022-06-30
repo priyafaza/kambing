@@ -79,7 +79,7 @@
                         <a href="{{ route('my.saving') }}" class="nav-link">
                             <i class="nav-icon fas fa-wallet"></i>
                             <p>
-                                Saving
+                                Menabung
                             </p>
                         </a>
                     </li>
@@ -88,7 +88,7 @@
                         <a href="{{ route('my.withdrawal') }}" class="nav-link">
                             <i class="nav-icon fas fa-edit"></i>
                             <p>
-                                Withdrawal
+                                Wallet
                             </p>
                         </a>
                     </li>

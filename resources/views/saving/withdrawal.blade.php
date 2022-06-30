@@ -20,11 +20,23 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-12">
+                    <div class="col-6">
                     <button class="btn btn-success" data-toggle="modal" data-target="#addWithdrawal"><i
                             class="fas fa-wallet"></i>
                         Withdrawal
                     </button>
+                    </div>
+                    <div class="col-6">
+                        <button class="btn btn-success" data-toggle="modal" data-target="#"><i
+                                class="fas fa-wallet"></i>
+                        Menabung
+                        </button>
+                    </div>
                 </div>
+                </div>
+
                 <!-- /.card-header -->
                 <div class="card-body">
                     <table id="example1" class="table table-bordered table-striped">
