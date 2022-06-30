@@ -11,6 +11,7 @@ class Transaction extends Model
 
     protected $fillable = [
         'saving_id',
+        'order_id',
         'amount',
         'category',
         'payment_proof',
@@ -78,5 +79,10 @@ class Transaction extends Model
         } else {
             return 'Belum ada bukti transfer';
         }
+    }
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
     }
 }

@@ -88,7 +88,26 @@ class Order extends Model
 
     public function getTotalPaymentAttribute()
     {
-        return formatPrice($this->amount());
+        return formatPrice($this->amount() - $this->saldo());
 
+    }
+
+    public function getSaldoAttribute()
+    {
+        return formatPrice($this->saldo());
+    }
+
+    public function transaction()
+    {
+        return $this->hasOne(Transaction::class);
+    }
+
+    public function saldo()
+    {
+        if($this->transaction()->exists()){
+            return $this->transaction['amount'];
+        } else {
+            return 0;
+        }
     }
 }

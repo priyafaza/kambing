@@ -92,6 +92,22 @@
                     <div class="col-md-6">
                         <div class="card card-primary">
                             <div class="card-header">
+                                <h3 class="card-title">Informasi wallet</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <!-- form start -->
+
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        <h4>Saldo saya sekarang</h4>
+                                        <h3>{{ formatPrice($wallet['cash']) }}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card card-primary">
+                            <div class="card-header">
                                 <h3 class="card-title">Informasi pengiriman</h3>
                             </div>
                             <!-- /.card-header -->
@@ -107,7 +123,7 @@
                                     <label for="exampleInputPassword1">Number</label>
                                     <input type="text" placeholder="08XX-XXXX-XXXX" class="form-control" name="number" rows="4">                                </div>
                                 <div class="form-group">
-                                    <label for="exampleInputPassword1">Shipping Address</label>
+                                    <label for="exampleInputPassword1">Address</label>
                                     <textarea class="form-control" name="shipping_address" rows="4"></textarea>
                                 </div>
                                 <div class="form-group">
@@ -117,6 +133,9 @@
                                         <option value="DI AMBIL">DI AMBIL</option>
                                         <option value="DI ANTAR">DI ANTAR</option>
                                     </select>
+                                </div>
+                                <div class="form-group">
+                                    <input type="checkbox" name="use_wallet"> Gunakan saldo saya untuk membayar pesanan
                                 </div>
                                 <button type="submit" class="btn btn-success">Checkout</button>
                             </div>

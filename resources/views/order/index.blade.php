@@ -28,8 +28,9 @@
                             <tr>
                                 <th>Shipping Address</th>
                                 <th>Total item</th>
-                                <th>Amount</th>
                                 <th>Option</th>
+                                <th>Amount</th>
+                                <th>Wallet Cash</th>
                                 <th>Total Amount</th>
                                 <th>Status</th>
                                 <th>Action</th>
@@ -40,8 +41,9 @@
                                 <tr>
                                     <td>{{ $order['shipping_address'] }}</td>
                                     <td>{{ $order['total_item'] }} ({{ $order['total_weight'] }})</td>
-                                    <td>{{ $order['amount'] }}</td>
                                     <td>{{ $order['shipping']}}</td>
+                                    <td>{{ $order['amount'] }}</td>
+                                    <td>{{ $order['saldo'] }}</td>
                                     <td>{{ $order['total_payment'] }}</td>
                                     <td>{{ $order['status'] }}</td>
                                     <td>

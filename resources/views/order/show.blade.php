@@ -93,13 +93,19 @@
                                 <div class="table-responsive">
                                     <table class="table">
                                         <tr>
+                                            <th>Shipping Options</th>
+                                            <td>{{$order['shipping']}} (Free)</td>
+                                        </tr>
+                                        <tr>
                                             <th style="width:50%">Subtotal:</th>
                                             <td>{{ $order['amount'] }}</td>
                                         </tr>
-                                        <tr>
-                                            <th>Options</th>
-                                            <td>{{$order['shipping']}}</td>
-                                        </tr>
+                                        @if($order['saldo'] !== 0)
+                                            <tr>
+                                                <th style="width:50%">Saldo:</th>
+                                                <td>{{ $order['saldo'] }}</td>
+                                            </tr>
+                                        @endif
                                         <tr>
                                             <th>Total:</th>
                                             <td>{{ $order['total_payment'] }}</td>

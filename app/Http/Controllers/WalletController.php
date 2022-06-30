@@ -10,7 +10,7 @@ class WalletController extends Controller
 
     public function index()
     {
-        $transactions = Transaction::where('category',Transaction::CATEGORY_WITHDRAW)
+        $transactions = Transaction::whereIn('category',[Transaction::CATEGORY_WITHDRAW])
             ->whereIn('status',[Transaction::STATUS_WAITING_APPROVAL,Transaction::STATUS_SUCCESS])
             ->with('wallet.user')
             ->get();

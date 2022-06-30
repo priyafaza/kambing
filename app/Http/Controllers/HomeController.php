@@ -51,8 +51,9 @@ class HomeController extends Controller
 
         $products = Product::with('productDetails')->get();
         $cart = Cart::all();
+        $wallet = $currentUser->wallet;
 
-        return view('order.create', compact('products', 'draftOrder', 'cart'));
+        return view('order.create', compact('products', 'draftOrder', 'cart', 'wallet'));
     }
 
     public function addToCart(Request $request)
@@ -96,7 +97,13 @@ class HomeController extends Controller
             'shipping' => ['required', 'string',
                 Rule::in(['DI AMBIL', 'DI ANTAR']),
             ],
+            'use_wallet' => 'nullable|string'
         ]);
+        if (isset($request['use_wallet'])) {
+            $request['use_wallet'] = true;
+        } else {
+            $request['use_wallet'] = false;
+        }
 
         for ($i = 0; $i < count($request['product_detail_id']); $i++) {
             $productDetail = ProductDetail::find($request['product_detail_id'][$i]);
@@ -106,6 +113,7 @@ class HomeController extends Controller
         }
         DB::transaction(function () use ($request) {
             $currentUser = $request->user();
+            $wallet = $currentUser->wallet;
             $order = $currentUser->orders()->where('status', 'draft')->first();
             $order['shipping'] = $request['shipping'];
             $order['number'] = $request['number'];
@@ -113,6 +121,7 @@ class HomeController extends Controller
             $order['status'] = $order->nextStatus();
             $order->save();
 
+            $total = 0;
             for ($i = 0; $i < count($request['product_detail_id']); $i++) {
                 $productDetail = ProductDetail::find($request['product_detail_id'][$i]);
                 $order->orderDetails()->create([
@@ -122,6 +131,25 @@ class HomeController extends Controller
                 ]);
                 $productDetail['stock'] -= $request['amount'][$i];
                 $productDetail->save();
+                $subTotal = $request['amount'][$i] * $productDetail['price'];
+                $total += $subTotal;
+            }
+
+            if ($request['use_wallet']) {
+                if ($total <= $wallet['cash']) {
+                    $amount = $total;
+                    $order['status'] = 'success_payment';
+                    $order->save();
+                } else {
+                    $amount = $wallet['cash'];
+                }
+
+                $wallet->transactions()->create([
+                    'order_id' => $order['id'],
+                    'amount' => $amount,
+                    'category' => Transaction::CATEGORY_BUY,
+                    'status'=>Transaction::STATUS_SUCCESS,
+                ]);
             }
         });
 
@@ -170,7 +198,7 @@ class HomeController extends Controller
     {
         $wallet = $request->user()->wallet;
         $wallet->load('transactions');
-        $transactions = $wallet->transactions()->where('category', Transaction::CATEGORY_WITHDRAW)->get();
+        $transactions = $wallet->transactions()->whereIn('category', [Transaction::CATEGORY_WITHDRAW])->get();
         return view('saving.withdrawal', compact('wallet', 'transactions'));
     }
 
@@ -196,7 +224,7 @@ class HomeController extends Controller
 
     public function withdrawalUserCancel(Request $request, Transaction $transaction)
     {
-        if($transaction['status'] === Transaction::STATUS_WAITING_APPROVAL){
+        if ($transaction['status'] === Transaction::STATUS_WAITING_APPROVAL) {
             $transaction['status'] = Transaction::STATUS_CANCELLED;
             $transaction->save();
         }
